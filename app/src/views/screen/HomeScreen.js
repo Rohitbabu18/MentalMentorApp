@@ -152,7 +152,7 @@ export default function HomeScreen({ navigation }) {
     //   const [query, setQuery] = useState("");
     //   const [data,setdata]=useState([]);
     // console.log(email, password);
-
+    //               https://infocentroid.us/mental-mentor/api/get_all_post
     const url = "https://infocentroid.us/mental-mentor/api/get_all_post";
     //setLoading(true);
     axios
@@ -472,6 +472,7 @@ else{
                   alignSelf: "flex-end",
                   marginStart: "auto",
                   marginEnd: 10,
+                  alignItems: 'center'
                 }}
               >
 
@@ -489,7 +490,7 @@ else{
                       color: "#708090",
                     }}
                   >
-                    Comment
+                    Comment {item.comment_count > "0" ? item.comment_count : null}
                   </Text>
                 </TouchableOpacity>
               </View>

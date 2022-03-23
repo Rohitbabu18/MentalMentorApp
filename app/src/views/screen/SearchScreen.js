@@ -150,7 +150,7 @@ const SearchScreen = ({ navigation }) => {
           onPress={() => double(Text1)}
           style={[styles.btnsecondary, { backgroundColor: COLORS.bluelight }]}
         >
-          <Text style={{ fontSize: 18, color: COLORS.white }}>Post</Text>
+          <Text style={{ fontSize: 18, color: COLORS.white }}>Search</Text>
         </TouchableOpacity>
       </View>
       <View

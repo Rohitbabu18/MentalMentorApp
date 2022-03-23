@@ -24,6 +24,7 @@ import Loader from "../utils/Loader";
 // Import statement for image picker
 import * as ImagePicker from "expo-image-picker";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // class AddPostScreen extends Component{
 //   state={user:''}
 //   updateUser =(user)=>{
@@ -77,7 +78,25 @@ function AddPostScreen({ navigation }) {
 
   // console.log(email, password);
   var status;
+  const getUserFromStorage = async () => {
+    try {
+      // setQuotes(AsyncStorage.getItem("quote_id"));
+      // console.log("quotes_id ->", quotes);
 
+      await AsyncStorage.getItem("name", (err, value) => {
+        if (err) {
+        } else {
+          if (value !== null) {
+            setCreator_name(value);
+            console.log("id ->", value);
+          }
+        }
+      });
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
   const Post = () => {
     if (query === "") {
       Platform.OS === "android"
@@ -95,21 +114,13 @@ function AddPostScreen({ navigation }) {
           ToastAndroid.BOTTOM
         )
         : null;
-    } else if (imageSource === "") {
-      Platform.OS === "android"
-        ? ToastAndroid.showWithGravity(
-          "Please select image",
-          ToastAndroid.SHORT,
-          ToastAndroid.BOTTOM
-        )
-        : null;
     } else {
       setLoading(true);
       const url = "https://infocentroid.us/mental-mentor/api/add_post";
 
       const params = new FormData();
       params.append("user_id", "1");
-      params.append("creator_name", "abcd");
+      params.append("creator_name", creator_name);
       params.append("topic", selectedItem);
       params.append("query", query);
       if (imageSource) {
@@ -152,40 +163,39 @@ function AddPostScreen({ navigation }) {
     }
   };
 
-  {
-    /*useEffect(() => {
- 
-    console.log("user_id  ");
-   
+
+  useEffect(() => {
+    getUserFromStorage();
   }, []);
 
-  const get = (id) => {
-    const url = "https://infocentroid.us/mental-mentor/api/get_profile";
-
-    const params = new FormData();
-    params.append("user_id", id);
-
-    setTimeout(() => {
-      console.log("url  -> ", url + "  >>body -> " + JSON.stringify(params));
-      fetch(url, {
-        method: "POST",
-        body: params,
-        redirect: "follow",
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          if (result.response === true) {
-            console.log("api result -> ", result.data);
-            setCommentData(result.data);
-          }
-        })
-        .catch((error) => console.log("error", error));
-    }, 2000);
-  };
-
+  /*
+    const get = (id) => {
+      const url = "https://infocentroid.us/mental-mentor/api/get_profile";
   
-*/
-  }
+      const params = new FormData();
+      params.append("user_id", id);
+  
+      setTimeout(() => {
+        console.log("url  -> ", url + "  >>body -> " + JSON.stringify(params));
+        fetch(url, {
+          method: "POST",
+          body: params,
+          redirect: "follow",
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            if (result.response === true) {
+              console.log("api result -> ", result.data);
+              setCommentData(result.data);
+            }
+          })
+          .catch((error) => console.log("error", error));
+      }, 2000);
+    };
+  
+    
+  */
+
 
   const pickImageFromGallery = async () => {
     let permissionResult =

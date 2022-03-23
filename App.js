@@ -12,6 +12,7 @@ import SearchScreen from "./app/src/views/screen/SearchScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import DrawerNav from "./app/src/navigation/DrawerNav";
 import { LogBox } from "react-native";
+import ProfileScreen from "./app/src/views/screen/ProfileScreen";
 
 LogBox.ignoreAllLogs();
 
@@ -37,6 +38,7 @@ const App = () => {
         <Stack.Screen name="Comment" component={CommentScreen} />
         <Stack.Screen name="AddPost" component={AddPostScreen} />
         <Stack.Screen name="Search" component={SearchScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

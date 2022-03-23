@@ -28,26 +28,26 @@ function SignUpScreen({ navigation }) {
     if (name === "") {
       Platform.OS === "android"
         ? ToastAndroid.showWithGravity(
-            "Please enter full name",
-            ToastAndroid.SHORT,
-            ToastAndroid.BOTTOM
-          )
+          "Please enter full name",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        )
         : null;
     } else if (email === "") {
       Platform.OS === "android"
         ? ToastAndroid.showWithGravity(
-            "Please enter your email address",
-            ToastAndroid.SHORT,
-            ToastAndroid.BOTTOM
-          )
+          "Please enter your email address",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        )
         : null;
     } else if (password === "") {
       Platform.OS === "android"
         ? ToastAndroid.showWithGravity(
-            "Please enter your password",
-            ToastAndroid.SHORT,
-            ToastAndroid.BOTTOM
-          )
+          "Please enter your password",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        )
         : null;
     } else {
       const url = "https://infocentroid.us/mental-mentor/api/registration?name";

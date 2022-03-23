@@ -28,18 +28,18 @@ function SignInScreen({ navigation }) {
     if (email === "") {
       Platform.OS === "android"
         ? ToastAndroid.showWithGravity(
-            "Please enter your email address",
-            ToastAndroid.SHORT,
-            ToastAndroid.BOTTOM
-          )
+          "Please enter your email address",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        )
         : null;
     } else if (password === "") {
       Platform.OS === "android"
         ? ToastAndroid.showWithGravity(
-            "Please enter your password",
-            ToastAndroid.SHORT,
-            ToastAndroid.BOTTOM
-          )
+          "Please enter your password",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM
+        )
         : null;
     } else {
       const url = "https://infocentroid.us/mental-mentor/api/login";
@@ -64,6 +64,7 @@ function SignInScreen({ navigation }) {
               AsyncStorage.setItem("id", result.data.id);
               AsyncStorage.setItem("name", result.data.name);
               AsyncStorage.setItem("email", result.data.email);
+              AsyncStorage.setItem("password", result.data.password);
               navigation.replace("Drawer");
             }
             // console.log("api result -> ", result);
@@ -225,7 +226,9 @@ function SignInScreen({ navigation }) {
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
-            <TouchableOpacity style={Styles.btnsecondary}>
+            <TouchableOpacity style={Styles.btnsecondary}
+              onPress={() => { }}
+            >
               <Image
                 style={Styles.btnImage}
                 source={{
