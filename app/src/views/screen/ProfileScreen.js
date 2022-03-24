@@ -10,7 +10,9 @@ import {
     PermissionsAndroid,
     Modal,
     StatusBar,
-    Text
+    Text,
+    KeyboardAvoidingView,
+    Platform
 } from 'react-native';
 import COLORS from '../../consts/color';
 import { Entypo } from "@expo/vector-icons";
@@ -150,7 +152,7 @@ export default function ProfileScreen(props) {
 
         }
     }
-
+    // const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0
     useEffect(() => {
         getUserFromStorage();
     }, [])
@@ -158,58 +160,60 @@ export default function ProfileScreen(props) {
         <SafeAreaView style={styles.container}>
 
             <Loader loading={loading} />
-            <StatusBar backgroundColor={COLORS.bluelight} barStyle='dark-content' />
+            <StatusBar backgroundColor={COLORS.bluelight} barStyle='light-content' />
             <ScrollView>
                 <View style={styles.headerview}>
                     <Text style={styles.headtext}>User Profile</Text>
                     <View style={{ flexDirection: 'row', marginTop: 20 }}>
-                        <Text style={styles.headertext}>Name : </Text>
+                        <Text style={{ ...styles.headertext, color: COLORS.white }}>Name : </Text>
                         <Text style={styles.textvalue}>{acname}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: 20 }}>
-                        <Text style={styles.headertext}>Email : </Text>
+                        <Text style={{ ...styles.headertext, color: COLORS.white }}>Email : </Text>
                         <Text style={styles.textvalue}>{acemail}</Text>
                     </View>
 
                 </View>
                 <Text style={styles.editbutton}>Edit Profile</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={styles.headertext}>Name : </Text>
+                <KeyboardAvoidingView behavior='padding'>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={styles.headertext}>Name :        </Text>
 
-                    <TextInput
-                        placeholder="name"
-                        value={name}
-                        onChangeText={(e) => {
-                            setName(e);
-                        }}
-                        style={styles.inputstyle}
-                    />
-                </View>
+                        <TextInput
+                            placeholder="name"
+                            value={name}
+                            onChangeText={(e) => {
+                                setName(e);
+                            }}
+                            style={styles.inputstyle}
+                        />
+                    </View>
 
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={styles.headertext}>Email : </Text>
-                    <TextInput
-                        placeholder="Email"
-                        value={email}
-                        onChangeText={(e) => {
-                            setEmail(e);
-                        }}
-                        keyboardType="email-address"
-                        style={styles.inputstyle}
-                    />
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={styles.headertext}>password : </Text>
-                    <TextInput
-                        placeholder="Password"
-                        onChangeText={(e) => {
-                            setPassword(e);
-                        }}
-                        secureTextEntry={true}
-                        keyboardType="visible-password"
-                        style={styles.inputstyle}
-                    />
-                </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={styles.headertext}>Email :         </Text>
+                        <TextInput
+                            placeholder="Email"
+                            value={email}
+                            onChangeText={(e) => {
+                                setEmail(e);
+                            }}
+                            keyboardType="email-address"
+                            style={styles.inputstyle}
+                        />
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={styles.headertext}>password : </Text>
+                        <TextInput
+                            placeholder="Password"
+                            onChangeText={(e) => {
+                                setPassword(e);
+                            }}
+                            secureTextEntry={true}
+                            keyboardType="visible-password"
+                            style={styles.inputstyle}
+                        />
+                    </View>
+                </KeyboardAvoidingView>
                 <TouchableOpacity
                     activeOpacity={0.5}
                     onPress={() => {
@@ -242,7 +246,7 @@ const styles = StyleSheet.create({
         margin: 20,
     },
     editbutton: {
-        color: 'red',
+        color: COLORS.bluelight,
         fontSize: 18,
         fontWeight: 'bold',
         margin: 30
@@ -250,11 +254,13 @@ const styles = StyleSheet.create({
     textvalue: {
         marginLeft: 10,
         fontSize: 18,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color: COLORS.white
     },
     headertext: {
         marginLeft: 20,
-        fontSize: 15
+        fontSize: 15,
+        color: COLORS.gray
     },
     headtext: {
         fontSize: 20,

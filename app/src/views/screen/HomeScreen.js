@@ -18,6 +18,7 @@ import { Entypo } from "@expo/vector-icons";
 import axios from "axios";
 import { useIsFocused } from "@react-navigation/native";
 import Loader from "../utils/Loader";
+import { Ionicons } from '@expo/vector-icons';
 
 export default function HomeScreen({ navigation }) {
   const [data, setData] = useState([]);
@@ -284,6 +285,7 @@ else{
             left: 10,
           }}
         >
+
           <Image
             source={{
               uri: "https://cdn-icons-png.flaticon.com/128/1828/1828859.png",
@@ -303,9 +305,13 @@ else{
           Home page
         </Text>
         */}
-        <View style={{ right: 20, position: "absolute" }}>
-          <Entypo name="dots-three-vertical" size={24} color="black" />
-        </View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Search")
+          }}
+          style={{ right: 20, position: "absolute" }}>
+          <Ionicons name="search" size={24} color="black" />
+        </TouchableOpacity>
       </View>
 
       {/*<View style={{ flexDirection: "row", justifyContent: "space-between",}}>
@@ -351,18 +357,28 @@ else{
               padding: 5,
             }}
           >
-            <Text
-              style={{
-                color: COLORS.bluelight,
-                fontSize: 17,
-                marginStart: 10,
-                marginEnd: 10,
-                fontWeight: 'bold'
-              }}
-            >
-              Topic :- {item.topic}
-            </Text>
-
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text
+                style={{
+                  color: COLORS.bluelight,
+                  fontSize: 17,
+                  marginStart: 10,
+                  marginEnd: 10,
+                  fontWeight: 'bold'
+                }}
+              >
+                Topic :- {item.topic}
+              </Text>
+              <Text
+                style={{
+                  color: COLORS.gray,
+                  fontSize: 15,
+                  marginLeft: 20
+                }}
+              >
+                {item.inserted_datetime}
+              </Text>
+            </View>
             {/*<Text
                 style={{
                   color: "#000",
@@ -480,17 +496,21 @@ else{
                   onPress={() => {
                     navigation.navigate("Comment", { item: item.id, query: item.query });
                   }}
-                  style={{ flexDirection: 'row' }}
+                  style={{ flexDirection: 'row', alignItems: 'center' }}
                 >
-                  <MaterialIcons name="comment" size={18} color={"#708090"} />
+                  <Text style={{
+                    marginStart: 5,
+                    color: "#708090",
+                  }}> {item.comment_count > "0" ? item.comment_count : null}</Text>
+                  <MaterialIcons name="comment" size={15} color={"#708090"} />
 
                   <Text
                     style={{
-                      marginStart: 5,
+                      marginStart: 2,
                       color: "#708090",
                     }}
                   >
-                    Comment {item.comment_count > "0" ? item.comment_count : null}
+                    Comment
                   </Text>
                 </TouchableOpacity>
               </View>

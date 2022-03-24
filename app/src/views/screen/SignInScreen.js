@@ -17,12 +17,25 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Loader from "../utils/Loader";
 
+
+// import firebase from 'firebase/compat/app';
+// import 'firebase/compat/auth';
+// import 'firebase/compat/firestore';
+// var config = {
+//   apiKey: "AIzaSyAE87UrHS8P3jtarB3wQf9ETw09aGpt0C8",
+//   authDomain: "mentalmentorapp.firebase.com",
+//   databaseURL: "https://mentalmentorapp.firebase.com",
+//   projectId: "mentalmentorapp",
+//   StorageBucket: "mentalmentorapp.appspot.com",
+//   messageingSenderId: "870830066613"
+// }
+// firebase.initializeApp(config);
+
 function SignInScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // console.log(email, password);
 
   function login() {
     if (email === "") {
@@ -77,6 +90,7 @@ function SignInScreen({ navigation }) {
       }, 1000);
     }
   }
+
   return (
     <SafeAreaView style={{ paddingHorizontal: 20, flex: 1 }}>
       <Loader loading={loading} />
@@ -240,7 +254,9 @@ function SignInScreen({ navigation }) {
 
             <View style={{ width: 10 }}></View>
 
-            <TouchableOpacity style={Styles.btnsecondary}>
+            <TouchableOpacity style={Styles.btnsecondary}
+              onPress={() => { Facebooklogin() }}
+            >
               <Image
                 style={Styles.btnImage}
                 source={{
