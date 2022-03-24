@@ -8,6 +8,7 @@ import React, { useState, useEffect } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { EvilIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -18,9 +19,7 @@ const DrawerContent = ({ props, navigation }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
-  useEffect(() => {
-    getUserFromStorage();
-  }, []);
+
   const getUserFromStorage = async () => {
     try {
       // setQuotes(AsyncStorage.getItem("quote_id"));
@@ -40,9 +39,9 @@ const DrawerContent = ({ props, navigation }) => {
         if (err) {
         } else {
           if (value !== null) {
-            setName(value);
+            setName(() => value);
 
-            console.log("quotes_id ->", value);
+            console.log("quotes_name ->", value);
           }
         }
       });
@@ -52,7 +51,7 @@ const DrawerContent = ({ props, navigation }) => {
           if (value !== null) {
             setEmail(value);
 
-            console.log("quotes_id ->", value);
+            console.log("quotes_email ->", value);
           }
         }
       });
@@ -93,7 +92,13 @@ const DrawerContent = ({ props, navigation }) => {
         .catch((error) => console.log("error", error));
     }, 2000);
   };
+  useEffect(() => {
+    const reLoad = navigation.addListener('focus', () => {
+      getUserFromStorage();
+    });
 
+    return reLoad;
+  }, [navigation]);
   return (
     <View style={{ backgroundColor: COLORS.bluelight, height: 200 }}>
       <View style={{ alignItems: "center", marginTop: 45 }}>
@@ -223,7 +228,7 @@ const DrawerContent = ({ props, navigation }) => {
           marginStart: 10,
         }}
       >
-        <AntDesign name="plus" size={24} color="blue" />
+        <MaterialCommunityIcons name="face-profile" size={24} color="blue" />
         <TouchableOpacity
           onPress={() => {
             navigation.toggleDrawer();

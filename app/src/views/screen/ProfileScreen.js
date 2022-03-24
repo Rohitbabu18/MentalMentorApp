@@ -21,6 +21,9 @@ import Styles from '../../styles';
 export default function ProfileScreen(props) {
     const [loading, setLoading] = useState(false);
     const [user_id, setUserid] = useState();
+
+    const [acname, setAcName] = useState();
+    const [acemail, setAcEmail] = useState();
     const [name, setName] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
@@ -43,7 +46,7 @@ export default function ProfileScreen(props) {
                 if (err) {
                 } else {
                     if (value !== null) {
-                        setName(value);
+                        setAcName(value);
 
                         console.log("quotes_id ->", value);
                     }
@@ -53,7 +56,7 @@ export default function ProfileScreen(props) {
                 if (err) {
                 } else {
                     if (value !== null) {
-                        setEmail(value);
+                        setAcEmail(value);
 
                         console.log("quotes_id ->", value);
                     }
@@ -118,17 +121,31 @@ export default function ProfileScreen(props) {
                 .then((response) => response.json())
                 .then((result) => {
                     if (result.response === true) {
-                        AsyncStorage.setItem("id", result.data.id);
-                        AsyncStorage.setItem("name", result.data.name);
-                        AsyncStorage.setItem("email", result.data.email);
-                        AsyncStorage.setItem("password", result.data.password);
+                        AsyncStorage.getItem('name')
+                            .then((data) => {
+                                data = name
+                                AsyncStorage.setItem('name', JSON.stringify(data));
+                            }).done();
+                        AsyncStorage.getItem('email')
+                            .then((data) => {
+                                data = email
+                                AsyncStorage.setItem('email', JSON.stringify(data));
+                            }).done();
+                        AsyncStorage.getItem('password')
+                            .then((data) => {
+                                data = password
+                                AsyncStorage.setItem('password', JSON.stringify(data));
+                            }).done();
                         setLoading(false);
                     }
-                    console.log("api result -> ", result);
+                    console.log("api result in profile update-> ", result);
                 })
                 .catch((error) => console.log("error", error))
                 .finally(() => {
+
+                    getUserFromStorage();
                     setLoading(false);
+
                 });
 
         }
@@ -136,8 +153,6 @@ export default function ProfileScreen(props) {
 
     useEffect(() => {
         getUserFromStorage();
-        //  get()
-        //  get()  https://infocentroid.us/mental-mentor/api/get_all_post
     }, [])
     return (
         <SafeAreaView style={styles.container}>
@@ -149,44 +164,52 @@ export default function ProfileScreen(props) {
                     <Text style={styles.headtext}>User Profile</Text>
                     <View style={{ flexDirection: 'row', marginTop: 20 }}>
                         <Text style={styles.headertext}>Name : </Text>
-                        <Text style={styles.textvalue}>{name}</Text>
+                        <Text style={styles.textvalue}>{acname}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: 20 }}>
                         <Text style={styles.headertext}>Email : </Text>
-                        <Text style={styles.textvalue}>{email}</Text>
+                        <Text style={styles.textvalue}>{acemail}</Text>
                     </View>
 
                 </View>
                 <Text style={styles.editbutton}>Edit Profile</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={styles.headertext}>Name : </Text>
 
+                    <TextInput
+                        placeholder="name"
+                        value={name}
+                        onChangeText={(e) => {
+                            setName(e);
+                        }}
+                        style={styles.inputstyle}
+                    />
+                </View>
 
-                <TextInput
-                    placeholder="name"
-                    value={name}
-                    onChangeText={(e) => {
-                        setName(e);
-                    }}
-                    style={styles.inputstyle}
-                />
-                <TextInput
-                    placeholder="Email"
-                    value={email}
-                    onChangeText={(e) => {
-                        setEmail(e);
-                    }}
-                    keyboardType="email-address"
-                    style={styles.inputstyle}
-                />
-                <TextInput
-                    value={password}
-                    placeholder="Password"
-                    onChangeText={(e) => {
-                        setPassword(e);
-                    }}
-                    secureTextEntry={true}
-                    keyboardType="visible-password"
-                    style={styles.inputstyle}
-                />
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={styles.headertext}>Email : </Text>
+                    <TextInput
+                        placeholder="Email"
+                        value={email}
+                        onChangeText={(e) => {
+                            setEmail(e);
+                        }}
+                        keyboardType="email-address"
+                        style={styles.inputstyle}
+                    />
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={styles.headertext}>password : </Text>
+                    <TextInput
+                        placeholder="Password"
+                        onChangeText={(e) => {
+                            setPassword(e);
+                        }}
+                        secureTextEntry={true}
+                        keyboardType="visible-password"
+                        style={styles.inputstyle}
+                    />
+                </View>
                 <TouchableOpacity
                     activeOpacity={0.5}
                     onPress={() => {
@@ -213,7 +236,7 @@ export default function ProfileScreen(props) {
 const styles = StyleSheet.create({
     inputstyle: {
         marginLeft: 20,
-        marginTop: 15
+        marginTop: 5
     },
     editview: {
         margin: 20,

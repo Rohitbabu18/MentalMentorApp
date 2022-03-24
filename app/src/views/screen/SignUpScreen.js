@@ -71,6 +71,15 @@ function SignUpScreen({ navigation }) {
               navigation.navigate("SignIn");
               setLoading(false);
             }
+            else {
+              Platform.OS === "android"
+                ? ToastAndroid.showWithGravity(
+                  "Email already exist...",
+                  ToastAndroid.SHORT,
+                  ToastAndroid.BOTTOM
+                ) : null
+            }
+
             console.log("api result -> ", result);
           })
           .catch((error) => console.log("error", error))
